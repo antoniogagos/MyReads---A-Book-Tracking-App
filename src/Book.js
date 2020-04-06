@@ -3,10 +3,8 @@ import SelectForm from './SelectForm';
 
 const book = (props) => {
   const book = props.book;
-  const bookAuthors = book.authors ? (book.authors.map(author => {
-    return (
-      <span key={book.authors.indexOf(author)}>{author}</span>
-    )
+  const bookAuthors = book.authors ? (book.authors.map((author, index) => {
+    return ( <span key={index}>{author}</span> )
   })) : '';
 
   return (

@@ -14,42 +14,32 @@ class ListBooks extends Component {
     const currentlyReading = books.filter(b => b.shelf === 'currentlyReading');
     const wantToRead = books.filter(b => b.shelf === 'wantToRead');
     const read = books.filter(b => b.shelf === 'read');
+    const shelves = [
+      {title: 'Currently Reading', books: currentlyReading},
+      {title: 'Want To Read', books: wantToRead},
+      {title: 'Read', books: read},    
+    ]
     return (
       <div className="list-books">
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Currently Reading</h2>
+          {shelves.map(shelve => (
+          <div key={shelve.title} className="bookshelf">
+            <h2 className="bookshelf-title">{shelve.title}</h2>
             <div className="bookshelf-books">
               <ol className="books-grid">
-                {currentlyReading.map(book => (
-                  <Book onChangeBookShelf={ ({selectedShelf, book}) => this.onChangeBookShelf({selectedShelf, book})} book={book} key={book.id}/>
+                {shelve.books.map(book => (
+                  <Book
+                    key={book.id}
+                    onChangeBookShelf={ ({selectedShelf, book}) => this.onChangeBookShelf({selectedShelf, book})}
+                    book={book}/>
                 ))}
               </ol>
             </div>
-          </div>
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Want to Read</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                {wantToRead.map(book => (
-                  <Book onChangeBookShelf={ ({selectedShelf, book}) => this.onChangeBookShelf({selectedShelf, book})} book={book} key={book.id}/>
-                ))}
-              </ol>
-            </div>
-          </div>
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Read</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                {read.map(book => (
-                  <Book onChangeBookShelf={ ({selectedShelf, book}) => this.onChangeBookShelf({selectedShelf, book})} book={book} key={book.id}/>
-                ))}
-              </ol>
-            </div>
-          </div>
+          </div>  
+          ))}
         </div>
         <Link to="/search" className="open-search">
           <button>Add a book</button>
